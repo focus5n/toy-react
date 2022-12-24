@@ -33,6 +33,21 @@ function Article(props) {
     </article>
 }
 
+function Create(props) {
+    return <article>
+        <h2>Create</h2>
+        <form onSubmit={event => {
+            event.preventDefault();
+            const title = event.target.title.value;
+            const body = event.target.body.value;
+            props.onCreate(title, body);
+        }}>
+            <p><input type="text" name="title" placeholder="title"/></p>
+            <p><textarea name="body" placeholder="body"></textarea></p>
+            <p><input type="submit" value="Create"/></p>
+        </form>
+    </article>
+}
 
 
 function App() {
@@ -40,19 +55,29 @@ function App() {
     // const mode = _mode[0];
     // const setMode = _mode[1];
     const [mode, setMode] = useState('WELCOME');
-
-    const topics = [
-        {id:crypto.randomUUID(), title:"문서", link:"https://ko.reactjs.org/docs/getting-started.html"},
-        {id:crypto.randomUUID(), title:"자습서", link:"https://ko.reactjs.org/tutorial/tutorial.html"},
-        {id:crypto.randomUUID(), title:"블로그", link:"https://ko.reactjs.org/blog"},
-        {id:crypto.randomUUID(), title:"커뮤니티", link:"https://ko.reactjs.org/community/support.html"}
-    ]
+    const [nextId, setNextId] = useState(5);
+    const [topics, setTopics] = useState([
+        {id:1, title:"문서", link:"https://ko.reactjs.org/docs/getting-started.html"},
+        {id:2, title:"자습서", link:"https://ko.reactjs.org/tutorial/tutorial.html"},
+        {id:3, title:"블로그", link:"https://ko.reactjs.org/blog"},
+        {id:4, title:"커뮤니티", link:"https://ko.reactjs.org/community/support.html"}
+    ]);
     let content;
 
     if (mode === "WELCOME") {
         content = <Article title="Welcome!" description="I am Welcome."></Article>;
     } else if (mode === "REACT") {
         content = <Article title="Welcome, React!" description="I am React."></Article>;
+    } else if (mode === "CREATE") {
+        content = <Create onCreate={(_title, _body) => {
+            const newTopic = {id: nextId, title:_title, body:_body}
+            const newTopics = [...topics];
+            newTopics.push(newTopic);
+
+            setTopics(newTopics);
+            setMode("WELCOME");
+            setNextId(nextId + 1);
+        }}></Create>
     } else {
         content = <Article title="Welcome!" description="I am Welcome."></Article>;
     }
@@ -69,6 +94,10 @@ function App() {
         }></Header>
         <Nav topics={topics}></Nav>
         {content}
+        <a id="CreateButton" href="/create" onClick={event => {
+            event.preventDefault();
+            setMode("CREATE");
+        }}>create</a>
     </div>
   );
 }
