@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedVariable
+
 import './App.css';
 import {useState} from "react";
 
@@ -74,6 +76,7 @@ function App() {
         content = <Create onCreate={(_title, _body) => {
             const newTopic = {id: nextId, title: _title, body: _body}
             const newTopics = [...topics];
+            // noinspection JSCheckFunctionSignatures
             newTopics.push(newTopic);
 
             setTopics(newTopics);
