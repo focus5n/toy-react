@@ -1,10 +1,25 @@
 .App {
+  font-size: 10px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+a {
+  text-decoration-line: none;
+}
+
+ol {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+}
+
+li {
+  float: left;
+  list-style: none;
+  font-size: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
 }
 
 .App-header {
@@ -15,9 +30,12 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-
 }
 
-.App-link {
-  color: #61dafb;
+.Article h2 {
+  font-size: 2rem;
+}
+
+.Article p {
+  font-size: 1.2rem;
 }
